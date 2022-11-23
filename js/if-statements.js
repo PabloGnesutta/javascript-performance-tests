@@ -1,3 +1,5 @@
+"use strict";
+
 function checkWithoutIf(id) {
   const obj = hash[id];
   return obj;
@@ -11,19 +13,19 @@ function checkWithIf(id) {
 const checkIterations = 5;
 
 qs("#checkWithoutIf").addEventListener("click", function () {
-  const t0 = performance.now();
+  const t0 = now();
   for (let c = 0; c < checkIterations; c++)
-    for (let i = 1; i < hashId; i++) checkWithoutIf(i);
+    for (let i = 1; i < idCount; i++) checkWithoutIf(i);
 
-  const tz = performance.now() - t0;
+  const tz = now() - t0;
   log(" check without if took", tz);
 });
 
 qs("#checkWithIf").addEventListener("click", function () {
-  const t0 = performance.now();
+  const t0 = now();
   for (let c = 0; c < checkIterations; c++)
-    for (let i = 1; i < hashId; i++) checkWithIf(i);
+    for (let i = 1; i < idCount; i++) checkWithIf(i);
 
-  const tz = performance.now() - t0;
+  const tz = now() - t0;
   log(" check with if took", tz);
 });

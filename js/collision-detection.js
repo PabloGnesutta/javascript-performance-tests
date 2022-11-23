@@ -1,105 +1,130 @@
-document
-  .querySelector("#collisionObj")
-  .addEventListener("click", checkCollisionObj);
+"use strict";
+
 document
   .querySelector("#iterateCollision")
   .addEventListener("click", iterateCollision);
 
 function checkCollisionObj() {
-  let t0 = performance.now();
+  let t0 = now();
   const a = objs[0];
   const collisions = [];
   const x = a.x;
   const y = a.y;
   const xZ = a.xZ;
   const yZ = a.yZ;
-  for (let i = 1; i < arrayId; i++) {
+  for (let i = 1; i < idCount; i++) {
     const b = objs[i];
     if (xZ > b.x && x < b.xZ && yZ > b.y && y < b.yZ) {
       collisions.push(b.id);
     }
   }
 
-  let tz = performance.now() - t0;
+  let tz = now() - t0;
   objCollisionAgg += tz;
-  //   log("  obj took", tz);
   return collisions;
 }
 
 function checkCollisionIdxLoc() {
-  let t0 = performance.now();
+  let t0 = now();
   const a = 0;
   const collisions = [];
-  const _locA = _loc[a];
-  const x = _locA[0];
-  const y = _locA[1];
-  const xZ = _locA[2];
-  const yZ = _locA[3];
-  for (let b = 1; b < arrayId; b++) {
-    const _locB = _loc[b];
-    if (xZ > _locB[0] && x < _locB[2] && yZ > _locB[1] && y < _locB[3]) {
-      collisions.push(ids[b]);
-    }
-  }
-
-  let tz = performance.now() - t0;
-  _locCollisionAgg += tz;
-  return collisions;
-}
-
-function checkCollisionIdxLoc2() {
-  let t0 = performance.now();
-  const a = 0;
-  const collisions = [];
-  const offsetA = 4 * a;
-  const x = _loc2[offsetA];
-  const y = _loc2[offsetA + 1];
-  const xZ = _loc2[offsetA + 2];
-  const yZ = _loc2[offsetA + 3];
-  for (let b = 1; b < arrayId; b++) {
-    const offsetB = 4 * b;
-    // log(offsetB, offsetB + 1, offsetB + 2, offsetB + 3);
+  const coordsA = coords[a];
+  const x = coordsA[0];
+  const y = coordsA[1];
+  const xZ = coordsA[2];
+  const yZ = coordsA[3];
+  for (let b = 1; b < idCount; b++) {
+    const coordsB = coords[b];
     if (
-      xZ > _loc2[offsetB] &&
-      x < _loc2[offsetB + 2] &&
-      yZ > _loc2[offsetB + 1] &&
-      y < _loc2[offsetB + 3]
+      xZ > coordsB[0] &&
+      x < coordsB[2] &&
+      yZ > coordsB[1] &&
+      y < coordsB[3]
     ) {
       collisions.push(ids[b]);
     }
   }
 
-  let tz = performance.now() - t0;
-  _loc2CollisionAgg += tz;
+  let tz = now() - t0;
+  coordsCollisionAgg += tz;
+  return collisions;
+}
+
+function checkCollisionIdxLoc2() {
+  let t0 = now();
+  const a = 0;
+  const collisions = [];
+  const offsetA = 6 * a;
+  const x = coords2[offsetA];
+  const y = coords2[offsetA + 1];
+  const xZ = coords2[offsetA + 2];
+  const yZ = coords2[offsetA + 3];
+  for (let b = 1; b < idCount; b++) {
+    const offsetB = 6 * b;
+    if (
+      xZ > coords2[offsetB] &&
+      x < coords2[offsetB + 2] &&
+      yZ > coords2[offsetB + 1] &&
+      y < coords2[offsetB + 3]
+    ) {
+      collisions.push(ids[b]);
+    }
+  }
+
+  let tz = now() - t0;
+  coords2CollisionAgg += tz;
+  return collisions;
+}
+
+function checkCollisionHash() {
+  const t0 = now();
+  const a = hash[1];
+  const collisions = [];
+  const x = a.x;
+  const y = a.y;
+  const xZ = a.xZ;
+  const yZ = a.yZ;
+  for (let i = 2; i <= idCount; i++) {
+    const b = hash[i];
+    if (xZ > b.x && x < b.xZ && yZ > b.y && y < b.yZ) {
+      collisions.push(b.id);
+    }
+  }
+
+  const tz = now() - t0;
+  hashCollisionAgg += tz;
   return collisions;
 }
 
 var collisionCurrentIteration = 0;
 var objCollisionAgg = 0;
-var _locCollisionAgg = 0;
-var _loc2CollisionAgg = 0;
+var coordsCollisionAgg = 0;
+var coords2CollisionAgg = 0;
+var hashCollisionAgg = 0;
 
 function iterateCollision() {
   collisionCurrentIteration++;
   objCollisionAgg = 0;
-  _locCollisionAgg = 0;
-  _loc2CollisionAgg = 0;
+  coordsCollisionAgg = 0;
+  coords2CollisionAgg = 0;
+  hashCollisionAgg = 0;
 
-  log("collision against", arrayId, "objects", numIterations, "times");
+  log("collision against", idCount, "objects", numIterations, "times");
   for (let i = 0; i < numIterations; i++) {
     const resultObj = checkCollisionObj();
-    const resultLoc = checkCollisionIdxLoc();
-    const resultLoc2 = checkCollisionIdxLoc2();
+    const resultCoords = checkCollisionIdxLoc();
+    const resultCoords2 = checkCollisionIdxLoc2();
+    const resultHash = checkCollisionHash();
     log(
       `${i + 1}/${numIterations}`,
-      resultLoc.length == resultObj.length &&
-        resultLoc.length == resultLoc2.length
+      resultCoords.length == resultObj.length &&
+        resultCoords.length == resultCoords2.length &&
+        resultCoords.length == resultHash.length
     );
   }
-  log("   - TOTAL obj avg", objCollisionAgg / numIterations);
-  log("   - TOTAL loc avg", _locCollisionAgg / numIterations);
-  log("   - TOTAL loc2 avg", _loc2CollisionAgg / numIterations);
+  log("   - obj avg", objCollisionAgg / numIterations);
+  log("   - coords avg", coordsCollisionAgg / numIterations);
+  log("   - coords2 avg", coords2CollisionAgg / numIterations);
+  log("   - hash avg", hashCollisionAgg / numIterations);
   log(" ");
 }
-
-// iterateCollision();
