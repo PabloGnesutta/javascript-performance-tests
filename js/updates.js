@@ -21,13 +21,13 @@ function updateObjs() {
 }
 
 function callExternalFunction() {
-  t0 = now();
+  const t0 = now();
   for (let i = 0; i < idCount; i++) externalUpdate(objs[i]);
   externalFunctionAgg += now() - t0;
 }
 
 function updateCoords() {
-  t0 = now();
+  const t0 = now();
   for (let i = 0; i < idCount; i++) {
     const offset = 6 * i;
     const newX = coords2[offset] + 1;

@@ -2,9 +2,7 @@
 
 qs("#iterateDictionaryLookup").addEventListener(
   "click",
-  function doIterateDictionaryLookup() {
-    iterateDictionaryLookup();
-  }
+  iterateDictionaryLookup
 );
 
 var objsArrLookupAgg = 0;
@@ -35,7 +33,7 @@ function lookupObjsArray(_id) {
 }
 
 function lookupIdsArray(_id) {
-  t0 = now();
+  const t0 = now();
   for (let i = 0; i < idCount; i++) {
     const id = ids[i];
     if (id === _id) {
@@ -49,7 +47,7 @@ function lookupIdsArray(_id) {
 }
 
 function lookupArrayBuffer(_id) {
-  t0 = now();
+  const t0 = now();
   for (let i = 0; i < idCount; i++) {
     const id = idsBuff[i];
     if (id === _id) {
