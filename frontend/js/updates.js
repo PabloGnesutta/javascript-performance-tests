@@ -63,14 +63,17 @@ function iterateUpdates() {
     updateHash();
   }
 
-  const objAvg = updateObjsAgg / numIterations;
-  const extAvg = externalFunctionAgg / numIterations;
-  const coordsAvg = updateCoordsAgg / numIterations;
-  const hashAvg = updateHashAgg / numIterations;
-  log(" updates iteration finished results:");
-  log("  - obj avg", objAvg);
-  log("  - external avg", extAvg);
-  log("  - coords avg", coordsAvg);
-  log("  - hash avg", hashAvg);
-  log("   - Time elapsed ", now() - t0);
+  const objAvg = (updateObjsAgg / numIterations).toFixed(3);
+  const extAvg = (externalFunctionAgg / numIterations).toFixed(3);
+  const coordsAvg = (updateCoordsAgg / numIterations).toFixed(3);
+  const hashAvg = (updateHashAgg / numIterations).toFixed(3);
+  print("resultado updates:");
+  print(numIterations, "iteraciones");
+  print(idCount, "objetos");
+  print(" - obj avg", objAvg);
+  print(" - external avg", extAvg);
+  print(" - coords avg", coordsAvg);
+  print(" - hash avg", hashAvg);
+  log("  - Time elapsed ", now() - t0);
+  print(" ");
 }

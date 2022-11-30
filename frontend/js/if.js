@@ -8,6 +8,7 @@ function checkWithoutIf(id) {
 function checkWithIf(id) {
   const obj = hash[id];
   if (obj.randomFlag) return obj;
+  else return null;
 }
 
 const checkIterations = 5;
@@ -18,7 +19,8 @@ qs("#checkWithoutIf").addEventListener("click", function () {
     for (let i = 1; i < idCount; i++) checkWithoutIf(i);
 
   const tz = now() - t0;
-  log(" check without if took", tz);
+  print("Sin if demoró", tz.toFixed(3));
+  print(" ");
 });
 
 qs("#checkWithIf").addEventListener("click", function () {
@@ -27,5 +29,6 @@ qs("#checkWithIf").addEventListener("click", function () {
     for (let i = 1; i < idCount; i++) checkWithIf(i);
 
   const tz = now() - t0;
-  log(" check with if took", tz);
+  print("Con if demoró", tz.toFixed(3));
+  print(" ");
 });

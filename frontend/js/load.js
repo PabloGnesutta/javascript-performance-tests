@@ -1,19 +1,18 @@
 "use strict";
 
-qs("#loadArray").addEventListener("click", loadArray);
+qs("#loadData").addEventListener("click", loadData);
 
+const chunkSize = 1000000;
 const numIterations = 20;
-const chunkSize = 3000000;
 
 var idCount = 0;
 
-var idsBuff = new Int32Array(chunkSize);
-var ids = [];
 var objs = [];
+var hash = {};
+var ids = [];
+// var idsBuff = new Int32Array(chunkSize);
 var coords = [];
 var coords2 = [];
-
-var hash = {};
 
 function newObj(id) {
   const x = Math.floor(Math.random() * 400);
@@ -26,7 +25,23 @@ function newObj(id) {
     yZ: y + 30,
     w: 20,
     h: 30,
+    randomFlag: false,
     name: "name-" + id,
+    _xZ: x + 20,
+    _yZ: y + 30,
+    _w: 20,
+    _h: 30,
+    _name: "name-" + id,
+    __xZ: x + 20,
+    __yZ: y + 30,
+    __w: 20,
+    __h: 30,
+    __name: "name-" + id,
+    ___xZ: x + 20,
+    ___yZ: y + 30,
+    ___w: 20,
+    ___h: 30,
+    ___name: "name-" + id,
     update() {
       this.x++;
       this.y++;
@@ -38,23 +53,28 @@ function newObj(id) {
   return returnObj;
 }
 
-function loadArray() {
-  log(" loadArray");
+function loadData() {
+  print(" loadData");
   const t0 = now();
-  // en este caso el buffer no mejora performance
-  // probablemente el js runtime determina que ids es un array de ints
   for (let i = 0; i < chunkSize; i++) {
     idCount++;
     const obj = newObj(idCount);
     objs.push(obj);
     ids.push(idCount);
-    idsBuff[i] = idCount;
+    hash[idCount] = obj;
+    // idsBuff[i] = idCount;
     coords.push([obj.x, obj.y, obj.xZ, obj.yZ]);
     coords2.push(obj.x, obj.y, obj.xZ, obj.yZ, obj.w, obj.h);
-    hash[idCount] = obj;
   }
-  log("  -idCount", idCount);
-  log("  -took", now() - t0);
+  print(" - idCount", idCount);
+  print(" - demoró", (now() - t0).toFixed(3));
+  print(" ");
 }
 
-loadArray();
+loadData();
+
+// log(objs);
+// log(ids);
+// log(hash);
+// log(coords);
+// log(coords2);

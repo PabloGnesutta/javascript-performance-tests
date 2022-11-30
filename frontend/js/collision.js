@@ -109,7 +109,9 @@ function iterateCollision() {
   coords2CollisionAgg = 0;
   hashCollisionAgg = 0;
 
-  log("collision against", idCount, "objects", numIterations, "times");
+  print("resultado colisiones:");
+  print(numIterations, "iteraciones");
+  print(idCount, "objetos");
   for (let i = 0; i < numIterations; i++) {
     const resultObj = checkCollisionObj();
     const resultCoords = checkCollisionIdxLoc();
@@ -122,9 +124,9 @@ function iterateCollision() {
         resultCoords.length == resultHash.length
     );
   }
-  log("   - obj avg", objCollisionAgg / numIterations);
-  log("   - coords avg", coordsCollisionAgg / numIterations);
-  log("   - coords2 avg", coords2CollisionAgg / numIterations);
-  log("   - hash avg", hashCollisionAgg / numIterations);
-  log(" ");
+  print(" - obj avg", (objCollisionAgg / numIterations).toFixed(3));
+  print(" - coords avg", (coordsCollisionAgg / numIterations).toFixed(3));
+  print(" - coords2 avg", (coords2CollisionAgg / numIterations).toFixed(3));
+  print(" - hash avg", (hashCollisionAgg / numIterations).toFixed(3));
+  print(" ");
 }
