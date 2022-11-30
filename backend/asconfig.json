@@ -1,0 +1,22 @@
+{
+  "targets": {
+    "debug": {
+      "outFile": "asm-build/debug.wasm",
+      "textFile": "asm-build/debug.wat",
+      "sourceMap": true,
+      "debug": true
+    },
+    "release": {
+      "outFile": "asm-build/release.wasm",
+      "textFile": "asm-build/release.wat",
+      "sourceMap": false,
+      "optimizeLevel": 3,
+      "shrinkLevel": 0,
+      "converge": false,
+      "noAssert": false
+    }
+  },
+  "options": {
+    "bindings": "esm"
+  }
+}

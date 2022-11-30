@@ -1,8 +1,13 @@
-require("dotenv").config();
-const http = require("http");
-const path = require("path");
-const url = require("url");
-const fs = require("fs");
+import dotenv from "dotenv";
+import http from "http";
+import path from "path";
+import url from "url";
+import fs from "fs";
+import { fileURLToPath } from "url";
+dotenv.config();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const indexHtmlFileAddress = path.join(
   __dirname,
@@ -18,15 +23,25 @@ const server = http.createServer(function (req, res) {
   const pathname = url.parse(req.url, true).pathname;
   const requestedBaseDir = pathname.split("/")[1];
   console.log("pathname", pathname);
-//   console.log("requestedBaseDir", requestedBaseDir);
 
   // Js/CSS Routes:
-  if (requestedBaseDir === "js" || requestedBaseDir === "css") {
+  if (["js", "css"].includes(requestedBaseDir)) {
     const contentType =
       requestedBaseDir === "js" ? "application/javascript" : "text/css";
     res.setHeader("Content-Type", contentType);
 
     const fileToFetch = path.join(__dirname, "../", "frontend", req.url);
+    fs.readFile(fileToFetch, (err, content) => {
+      if (err) return errorResponse(res, err);
+      return res.end(content);
+    });
+  }
+
+  // WASM
+  if (["asm-build"].includes(requestedBaseDir)) {
+    res.setHeader("Content-Type", "application/wasm");
+
+    const fileToFetch = path.join(__dirname, req.url);
     fs.readFile(fileToFetch, (err, content) => {
       if (err) return errorResponse(res, err);
       return res.end(content);

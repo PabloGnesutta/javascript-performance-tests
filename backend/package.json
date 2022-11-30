@@ -1,11 +1,24 @@
 {
   "scripts": {
-    "serve": "nodemon performance-test.entrypoint.js"
+    "serve": "nodemon performance-test.entrypoint.js",
+    "asbuild:debug": "asc assembly/index.ts --target debug",
+    "asbuild:release": "asc assembly/index.ts --target release",
+    "asbuild": "npm run asbuild:debug && npm run asbuild:release",
+    "test": "node tests",
+    "start": "npx serve ."
   },
   "dependencies": {
     "dotenv": "^16.0.3"
   },
   "devDependencies": {
+    "assemblyscript": "^0.24.1",
     "nodemon": "^2.0.20"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./build/release.js",
+      "types": "./build/release.d.ts"
+    }
   }
 }
