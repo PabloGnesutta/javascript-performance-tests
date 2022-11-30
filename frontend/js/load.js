@@ -1,6 +1,7 @@
 "use strict";
 
-qs("#loadData").addEventListener("click", loadData);
+const loadBtn1 = qs("#loadData");
+loadBtn1.addEventListener("click", loadData);
 
 const chunkSize = 1000000;
 const numIterations = 20;
@@ -54,21 +55,25 @@ function newObj(id) {
 }
 
 function loadData() {
-  print(" loadData");
-  const t0 = now();
-  for (let i = 0; i < chunkSize; i++) {
-    idCount++;
-    const obj = newObj(idCount);
-    objs.push(obj);
-    ids.push(idCount);
-    hash[idCount] = obj;
-    // idsBuff[i] = idCount;
-    coords.push([obj.x, obj.y, obj.xZ, obj.yZ]);
-    coords2.push(obj.x, obj.y, obj.xZ, obj.yZ, obj.w, obj.h);
-  }
-  print(" - idCount", idCount);
-  print(" - demoró", (now() - t0).toFixed(3));
-  print(" ");
+  loadBtn1.classList.add("active");
+  setTimeout(() => {
+    print(" loadData");
+    const t0 = now();
+    for (let i = 0; i < chunkSize; i++) {
+      idCount++;
+      const obj = newObj(idCount);
+      objs.push(obj);
+      ids.push(idCount);
+      hash[idCount] = obj;
+      // idsBuff[i] = idCount;
+      coords.push([obj.x, obj.y, obj.xZ, obj.yZ]);
+      coords2.push(obj.x, obj.y, obj.xZ, obj.yZ, obj.w, obj.h);
+    }
+    print(" - idCount", idCount);
+    print(" - demoró", (now() - t0).toFixed(3));
+    print(" ");
+    loadBtn1.classList.remove("active");
+  }, 0);
 }
 
 loadData();

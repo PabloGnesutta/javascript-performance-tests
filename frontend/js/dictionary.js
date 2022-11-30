@@ -1,9 +1,7 @@
 "use strict";
 
-qs("#iterateDictionaryLookup").addEventListener(
-  "click",
-  iterateDictionaryLookup
-);
+const dictBtn1 = qs("#iterateDictionaryLookup");
+dictBtn1.addEventListener("click", iterateDictionaryLookup);
 
 var objsArrLookupAgg = 0;
 var idsArrLookupAgg = 0;
@@ -67,38 +65,37 @@ function lookupHash(_id) {
 }
 
 function iterateDictionaryLookup() {
-  const t0 = now();
-  log(" ");
-  log(" ", numIterations, "iteraciones con", idCount, "objetos");
-  objsArrLookupAgg = 0;
-  idsArrLookupAgg = 0;
-  buffIdsArrLookupAgg = 0;
-  hashLookupAgg = 0;
+  dictBtn1.classList.add("active");
+  setTimeout(() => {
+    const t0 = now();
+    log(" ");
+    log(" ", numIterations, "iteraciones con", idCount, "objetos");
+    objsArrLookupAgg = 0;
+    idsArrLookupAgg = 0;
+    buffIdsArrLookupAgg = 0;
+    hashLookupAgg = 0;
 
-  for (var i = 0; i < numIterations; i++) {
-    const id = Math.floor(Math.random() * idCount) + 1;
-    log(`${i + 1}/${numIterations}`, "id", id);
-    lookupObjsArray(id);
-    lookupIdsArray(id);
-    // lookupArrayBuffer(id);
-    lookupHash(id);
-  }
+    for (var i = 0; i < numIterations; i++) {
+      const id = Math.floor(Math.random() * idCount) + 1;
+      log(`${i + 1}/${numIterations}`, "id", id);
+      lookupObjsArray(id);
+      lookupIdsArray(id);
+      // lookupArrayBuffer(id);
+      lookupHash(id);
+    }
 
-  const objAvg = (objsArrLookupAgg / numIterations).toFixed(3);
-  const idxAvg = (idsArrLookupAgg / numIterations).toFixed(3);
-  // const buffIdxAvg = (buffIdsArrLookupAgg / numIterations).toFixed(3);
-  const hashAvg = (hashLookupAgg / numIterations).toFixed(3);
-  print("resultado diccionario:");
-  print(numIterations, "iteraciones");
-  print(idCount, "objetos");
-  // print("  - obj avg/total", objAvg, "/", objsArrLookupAgg.toFixed(3));
-  print(" - obj avg", objAvg);
-  // print("  - idx avg/total", idxAvg, "/", idsArrLookupAgg.toFixed(3));
-  print(" - idx avg", idxAvg);
-  // print("  - buff idx avg/total", buffIdxAvg, "/", buffIdsArrLookupAgg);
-  // print("  - buff idx avg", buffIdxAvg);
-  // print("  - hash avg/total", hashAvg, "/", hashLookupAgg.toFixed(3));
-  print(" - hash avg", hashAvg);
-  log("  - demoró ", now() - t0);
-  print(" ");
+    const objAvg = (objsArrLookupAgg / numIterations).toFixed(3);
+    const idxAvg = (idsArrLookupAgg / numIterations).toFixed(3);
+    // const buffIdxAvg = (buffIdsArrLookupAgg / numIterations).toFixed(3);
+    const hashAvg = (hashLookupAgg / numIterations).toFixed(3);
+    print("resultado diccionario:");
+    print(numIterations, "iteraciones");
+    print(idCount, "objetos");
+    print(" - obj avg", objAvg);
+    print(" - idx avg", idxAvg);
+    print(" - hash avg", hashAvg);
+    log("  - demoró ", now() - t0);
+    print(" ");
+    dictBtn1.classList.remove("active");
+  }, 0);
 }

@@ -1,6 +1,7 @@
 "use strict";
 
-qs("#iterateUpdates").addEventListener("click", iterateUpdates);
+const updtBtn1 = qs("#iterateUpdates");
+updtBtn1.addEventListener("click", iterateUpdates);
 
 var updateObjsAgg = 0;
 var externalFunctionAgg = 0;
@@ -47,33 +48,37 @@ function updateHash() {
 }
 
 function iterateUpdates() {
-  const t0 = now();
-  log(" ");
-  log(" perform", numIterations, "iterations with", idCount, "objects");
-  updateObjsAgg = 0;
-  externalFunctionAgg = 0;
-  updateCoordsAgg = 0;
-  updateHashAgg = 0;
+  updtBtn1.classList.add("active");
+  setTimeout(() => {
+    const t0 = now();
+    log(" ");
+    log(" perform", numIterations, "iterations with", idCount, "objects");
+    updateObjsAgg = 0;
+    externalFunctionAgg = 0;
+    updateCoordsAgg = 0;
+    updateHashAgg = 0;
 
-  for (var i = 0; i < numIterations; i++) {
-    log(`${i + 1}/${numIterations}`);
-    updateObjs();
-    callExternalFunction();
-    updateCoords();
-    updateHash();
-  }
+    for (var i = 0; i < numIterations; i++) {
+      log(`${i + 1}/${numIterations}`);
+      updateObjs();
+      callExternalFunction();
+      updateCoords();
+      updateHash();
+    }
 
-  const objAvg = (updateObjsAgg / numIterations).toFixed(3);
-  const extAvg = (externalFunctionAgg / numIterations).toFixed(3);
-  const coordsAvg = (updateCoordsAgg / numIterations).toFixed(3);
-  const hashAvg = (updateHashAgg / numIterations).toFixed(3);
-  print("resultado updates:");
-  print(numIterations, "iteraciones");
-  print(idCount, "objetos");
-  print(" - obj avg", objAvg);
-  print(" - external avg", extAvg);
-  print(" - coords avg", coordsAvg);
-  print(" - hash avg", hashAvg);
-  log("  - Time elapsed ", now() - t0);
-  print(" ");
+    const objAvg = (updateObjsAgg / numIterations).toFixed(3);
+    const extAvg = (externalFunctionAgg / numIterations).toFixed(3);
+    const coordsAvg = (updateCoordsAgg / numIterations).toFixed(3);
+    const hashAvg = (updateHashAgg / numIterations).toFixed(3);
+    print("resultado updates:");
+    print(numIterations, "iteraciones");
+    print(idCount, "objetos");
+    print(" - obj avg", objAvg);
+    print(" - external avg", extAvg);
+    print(" - coords avg", coordsAvg);
+    print(" - hash avg", hashAvg);
+    log("  - Time elapsed ", now() - t0);
+    print(" ");
+    updtBtn1.classList.remove("active");
+  }, 0);
 }

@@ -1,8 +1,6 @@
 "use strict";
-
-document
-  .querySelector("#iterateCollision")
-  .addEventListener("click", iterateCollision);
+const collBtn1 = qs("#iterateCollision");
+collBtn1.addEventListener("click", iterateCollision);
 
 function checkCollisionObj() {
   let t0 = now();
@@ -103,30 +101,34 @@ var coords2CollisionAgg = 0;
 var hashCollisionAgg = 0;
 
 function iterateCollision() {
-  collisionCurrentIteration++;
-  objCollisionAgg = 0;
-  coordsCollisionAgg = 0;
-  coords2CollisionAgg = 0;
-  hashCollisionAgg = 0;
+  collBtn1.classList.add("active");
+  setTimeout(() => {
+    collisionCurrentIteration++;
+    objCollisionAgg = 0;
+    coordsCollisionAgg = 0;
+    coords2CollisionAgg = 0;
+    hashCollisionAgg = 0;
 
-  print("resultado colisiones:");
-  print(numIterations, "iteraciones");
-  print(idCount, "objetos");
-  for (let i = 0; i < numIterations; i++) {
-    const resultObj = checkCollisionObj();
-    const resultCoords = checkCollisionIdxLoc();
-    const resultCoords2 = checkCollisionIdxLoc2();
-    const resultHash = checkCollisionHash();
-    log(
-      `${i + 1}/${numIterations}`,
-      resultCoords.length == resultObj.length &&
-        resultCoords.length == resultCoords2.length &&
-        resultCoords.length == resultHash.length
-    );
-  }
-  print(" - obj avg", (objCollisionAgg / numIterations).toFixed(3));
-  print(" - coords avg", (coordsCollisionAgg / numIterations).toFixed(3));
-  print(" - coords2 avg", (coords2CollisionAgg / numIterations).toFixed(3));
-  print(" - hash avg", (hashCollisionAgg / numIterations).toFixed(3));
-  print(" ");
+    print("resultado colisiones:");
+    print(numIterations, "iteraciones");
+    print(idCount, "objetos");
+    for (let i = 0; i < numIterations; i++) {
+      const resultObj = checkCollisionObj();
+      const resultCoords = checkCollisionIdxLoc();
+      const resultCoords2 = checkCollisionIdxLoc2();
+      const resultHash = checkCollisionHash();
+      log(
+        `${i + 1}/${numIterations}`,
+        resultCoords.length == resultObj.length &&
+          resultCoords.length == resultCoords2.length &&
+          resultCoords.length == resultHash.length
+      );
+    }
+    print(" - obj avg", (objCollisionAgg / numIterations).toFixed(3));
+    print(" - coords avg", (coordsCollisionAgg / numIterations).toFixed(3));
+    print(" - coords2 avg", (coords2CollisionAgg / numIterations).toFixed(3));
+    print(" - hash avg", (hashCollisionAgg / numIterations).toFixed(3));
+    print(" ");
+    collBtn1.classList.remove("active");
+  }, 0);
 }

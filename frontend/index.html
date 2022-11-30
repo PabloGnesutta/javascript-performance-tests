@@ -42,5 +42,22 @@
     <script src="js/collision.js"></script>
     <script src="js/updates.js"></script>
     <script src="js/if.js"></script>
+
+    <!-- <script>
+      const url = "/asm-build/release.wasm";
+      console.log("...fetching");
+      const importObject = {
+        module: {},
+        env: {
+          memory: new WebAssembly.Memory({ initial: 256 }),
+        },
+      };
+      WebAssembly.instantiateStreaming(fetch(url), importObject).then(
+        (result) => {
+          const add = result.instance.exports.add;
+          console.log(add(4, 5));
+        }
+      );
+    </script> -->
   </body>
 </html>
