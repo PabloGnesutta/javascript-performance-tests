@@ -22,6 +22,7 @@ const PORT = process.env.PORT;
 const server = http.createServer(function (req, res) {
   const pathname = url.parse(req.url, true).pathname;
   const requestedBaseDir = pathname.split("/")[1];
+  const extension = pathname.split(".")[1];
   console.log("pathname", pathname);
 
   // Js/CSS Routes:
@@ -39,7 +40,8 @@ const server = http.createServer(function (req, res) {
 
   // WASM
   if (["asm-build"].includes(requestedBaseDir)) {
-    res.setHeader("Content-Type", "application/wasm");
+    const mimeEnd = extension === "wasm" ? "wasm" : "javascript";
+    res.setHeader("Content-Type", `application/${mimeEnd}`);
 
     const fileToFetch = path.join(__dirname, req.url);
     fs.readFile(fileToFetch, (err, content) => {
