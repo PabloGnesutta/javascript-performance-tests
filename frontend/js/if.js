@@ -40,5 +40,5 @@ withIfBtn.addEventListener("click", function () {
     print("Con if demoró", tz.toFixed(3));
     print(" ");
     withIfBtn.classList.remove("active");
-  }, 0);
+  }, 10);
 });

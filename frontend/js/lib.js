@@ -12,14 +12,14 @@ const print = function () {
   for (let i = 0; i < arguments.length; i++) {
     argsString += arguments[i] + " ";
   }
-  log(argsString);
 
   const div = newEl("div");
   for (let i = 0; i < arguments.length; i++) {
     const span = newEl("span");
     span.innerText = arguments[i] + " ";
     div.appendChild(span);
-    log(arguments[i]);
   }
+  log(...arguments);
   _console.appendChild(div);
+  _console.scrollTop = _console.scrollHeight;
 };

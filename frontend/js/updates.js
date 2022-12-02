@@ -80,5 +80,5 @@ function iterateUpdates() {
     log("  - Time elapsed ", now() - t0);
     print(" ");
     updtBtn1.classList.remove("active");
-  }, 0);
+  }, 10);
 }

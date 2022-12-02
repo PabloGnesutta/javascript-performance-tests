@@ -97,5 +97,5 @@ function iterateDictionaryLookup() {
     log("  - demoró ", now() - t0);
     print(" ");
     dictBtn1.classList.remove("active");
-  }, 0);
+  }, 10);
 }

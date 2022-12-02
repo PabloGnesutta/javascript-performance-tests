@@ -16,7 +16,7 @@
 
         <div>
           <h3>Diccionario</h3>
-          <button id="iterateDictionaryLookup">Buscar en diccionarios</button>
+          <button id="iterateDictionaryLookup">Buscar diccionarios</button>
         </div>
         <div>
           <h3>Colisión</h3>
@@ -37,27 +37,11 @@
     </div>
 
     <script src="js/lib.js"></script>
-    <script src="js/load.js"></script>
-    <script src="js/dictionary.js"></script>
-    <script src="js/collision.js"></script>
-    <script src="js/updates.js"></script>
-    <script src="js/if.js"></script>
-
-    <!-- <script>
-      const url = "/asm-build/release.wasm";
-      console.log("...fetching");
-      const importObject = {
-        module: {},
-        env: {
-          memory: new WebAssembly.Memory({ initial: 256 }),
-        },
-      };
-      WebAssembly.instantiateStreaming(fetch(url), importObject).then(
-        (result) => {
-          const add = result.instance.exports.add;
-          console.log(add(4, 5));
-        }
-      );
-    </script> -->
+    <script src="js/globals.js"></script>
+    <script type="module" src="js/load.js"></script>
+    <script type="module" src="js/dictionary.js"></script>
+    <script type="module" src="js/collision.js"></script>
+    <script type="module" src="js/updates.js"></script>
+    <script type="module" src="js/if.js"></script>
   </body>
 </html>

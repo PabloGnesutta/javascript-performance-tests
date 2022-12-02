@@ -1,19 +1,8 @@
 "use strict";
+// import { preloadArr } from "/asm-build/release.js";
 
 const loadBtn1 = qs("#loadData");
 loadBtn1.addEventListener("click", loadData);
-
-const chunkSize = 1000000;
-const numIterations = 20;
-
-var idCount = 0;
-
-var objs = [];
-var hash = {};
-var ids = [];
-// var idsBuff = new Int32Array(chunkSize);
-var coords = [];
-var coords2 = [];
 
 function newObj(id) {
   const x = Math.floor(Math.random() * 400);
@@ -58,6 +47,7 @@ function loadData() {
   loadBtn1.classList.add("active");
   setTimeout(() => {
     print(" loadData");
+    // asmCoords = preloadArr(chunkSize * 6);
     const t0 = now();
     for (let i = 0; i < chunkSize; i++) {
       idCount++;
@@ -68,18 +58,28 @@ function loadData() {
       // idsBuff[i] = idCount;
       coords.push([obj.x, obj.y, obj.xZ, obj.yZ]);
       coords2.push(obj.x, obj.y, obj.xZ, obj.yZ, obj.w, obj.h);
+
+      // const asmCoordsOffset = 6 * i;
+      // asmCoords[asmCoordsOffset] = obj.x;
+      // asmCoords[asmCoordsOffset + 1] = obj.y;
+      // asmCoords[asmCoordsOffset + 2] = obj.xZ;
+      // asmCoords[asmCoordsOffset + 3] = obj.yZ;
     }
     print(" - idCount", idCount);
     print(" - demoró", (now() - t0).toFixed(3));
     print(" ");
     loadBtn1.classList.remove("active");
-  }, 0);
+    logState();
+  }, 10);
 }
 
 loadData();
 
-// log(objs);
-// log(ids);
-// log(hash);
-// log(coords);
-// log(coords2);
+function logState() {
+  // log("asmCoords", asmCoords);
+  // log(objs);
+  // log(ids);
+  // log(hash);
+  // log(coords);
+  // log(coords2);
+}

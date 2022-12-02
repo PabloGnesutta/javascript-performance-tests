@@ -1,6 +1,23 @@
 "use strict";
+
+// import { checkCollisionAsm } from "/asm-build/release.js";
+
 const collBtn1 = qs("#iterateCollision");
 collBtn1.addEventListener("click", iterateCollision);
+
+var asmCollisionAgg = 0;
+var objCollisionAgg = 0;
+var coordsCollisionAgg = 0;
+var coords2CollisionAgg = 0;
+var hashCollisionAgg = 0;
+
+function _checkCollisionAsm() {
+  let t0 = now();
+  const collision = checkCollisionAsm(asmCoords, idCount, ids);
+  let tz = now() - t0;
+  asmCollisionAgg += tz;
+  return collision;
+}
 
 function checkCollisionObj() {
   let t0 = now();
@@ -94,16 +111,10 @@ function checkCollisionHash() {
   return collisions;
 }
 
-var collisionCurrentIteration = 0;
-var objCollisionAgg = 0;
-var coordsCollisionAgg = 0;
-var coords2CollisionAgg = 0;
-var hashCollisionAgg = 0;
-
 function iterateCollision() {
   collBtn1.classList.add("active");
   setTimeout(() => {
-    collisionCurrentIteration++;
+    asmCollisionAgg = 0;
     objCollisionAgg = 0;
     coordsCollisionAgg = 0;
     coords2CollisionAgg = 0;
@@ -117,18 +128,22 @@ function iterateCollision() {
       const resultCoords = checkCollisionIdxLoc();
       const resultCoords2 = checkCollisionIdxLoc2();
       const resultHash = checkCollisionHash();
+      // const resultAsm = _checkCollisionAsm();
       log(
         `${i + 1}/${numIterations}`,
         resultCoords.length == resultObj.length &&
           resultCoords.length == resultCoords2.length &&
-          resultCoords.length == resultHash.length
+          resultCoords.length == resultHash.length &&
+          // resultCoords.length == resultAsm.length &&
+          true
       );
     }
     print(" - obj avg", (objCollisionAgg / numIterations).toFixed(3));
     print(" - coords avg", (coordsCollisionAgg / numIterations).toFixed(3));
     print(" - coords2 avg", (coords2CollisionAgg / numIterations).toFixed(3));
     print(" - hash avg", (hashCollisionAgg / numIterations).toFixed(3));
+    print(" - asm avg", (asmCollisionAgg / numIterations).toFixed(3));
     print(" ");
     collBtn1.classList.remove("active");
-  }, 0);
+  }, 10);
 }
